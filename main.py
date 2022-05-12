@@ -72,6 +72,7 @@ def depositos_get(msg_id):
 def depositos_match():
     remitente = str(request.args.get('remitente'))
     monto = float(request.args.get('monto'))
+    fecha = str(reques.args.get('monto'))
     try:
         conn = db_connection()
         cursor = conn.cursor()
@@ -119,22 +120,22 @@ def depositos_match():
                 discrepancia = abs((monto-monto_depositos)/monto)
                 cascada = calc(monto).tolerance()
                 
-                if  fuzz.ratio(str(bank_name),str(desk_name))>=69 and r['fecha'] == str(datetime.today().date()) and discrepancia < cascada and r['cobro']==False:
+                if  fuzz.ratio(str(bank_name),str(desk_name))>=69 and r['fecha'] == fecha and discrepancia < cascada and r['cobro']==False:
                     sql = "UPDATE depositos SET cobro = {0} WHERE msg_id = '{1}'".format(True, r['msg_id'])
                     cursor.execute(sql)
                     conn.commit()
                     return jsonify({'mensaje':'Transacción encontrada', 'codigo': '200'},{'datos':r})
-                elif fuzz.ratio(str(bank_name2),str(desk_name))>=69 and r['fecha'] == str(datetime.today().date()) and discrepancia < cascada and r['cobro']==False:
+                elif fuzz.ratio(str(bank_name2),str(desk_name))>=69 and r['fecha'] == fecha and discrepancia < cascada and r['cobro']==False:
                     sql = "UPDATE depositos SET cobro = {0} WHERE msg_id = '{1}'".format(True, r['msg_id'])
                     cursor.execute(sql)
                     conn.commit()
                     return jsonify({'mensaje':'Transacción encontrada', 'codigo': '200'},{'datos':r})
-                elif fuzz.ratio(str(bank_name),str(desk_name2))>=69  and r['fecha'] == str(datetime.today().date()) and discrepancia < cascada and r['cobro']==False:
+                elif fuzz.ratio(str(bank_name),str(desk_name2))>=69  and r['fecha'] == fecha and discrepancia < cascada and r['cobro']==False:
                     sql = "UPDATE depositos SET cobro = {0} WHERE msg_id = '{1}'".format(True, r['msg_id'])
                     cursor.execute(sql)
                     conn.commit()
                     return jsonify({'mensaje':'Transacción encontrada', 'codigo': '200'},{'datos':r})
-                elif fuzz.ratio(str(bank_name2),str(desk_name2))>=69  and r['fecha'] == str(datetime.today().date()) and discrepancia < cascada and r['cobro']==False:
+                elif fuzz.ratio(str(bank_name2),str(desk_name2))>=69  and r['fecha'] == fecha and discrepancia < cascada and r['cobro']==False:
                     sql = "UPDATE depositos SET cobro = {0} WHERE msg_id = '{1}'".format(True, r['msg_id'])
                     cursor.execute(sql)
                     conn.commit()
